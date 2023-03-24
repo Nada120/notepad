@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 Widget myListTile({
   required String title,
   required String subtitle,
-  required Color color,
 }) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
-      color: color,
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
     ),
     child: ListTile(
       onTap: (){},
