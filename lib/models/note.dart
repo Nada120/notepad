@@ -13,26 +13,14 @@ class Note{
     required this.lastUpdated,
   });
 
-  Note copy({
-    String? title,
-    String? content,
-    String? importance,
-    String? createdTime,
-    String? lastUpdated
-  }) => Note(
-    title: title ?? this.title, 
-    content: content ?? this.content,
-    importance: importance ?? this.importance, 
-    createdTime: createdTime ?? this.createdTime, 
-    lastUpdated: lastUpdated ?? this.lastUpdated,
-  );
-
-  static Note fromJson(Map<String, dynamic> json) => Note(
-    title: json['title'],
-    content: json['content'],
-    importance: json['importance'],
-    createdTime: json['createdTime'],//+json['createdClock'],
-    lastUpdated: json['lastUpdated']//+json['lastUpClock']
-  ); 
+  factory Note.fromJson(Map<String, dynamic> json) {
+    return Note(
+      title: json['title'], 
+      content: json['content'], 
+      importance: json['importance'],
+      createdTime: json['createdTime'], 
+      lastUpdated: json['lastUpdated']
+    );
+  }
 
 }

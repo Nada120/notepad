@@ -16,13 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-   
-  setData() async {
-    List<Note>? nd;
-    nd = await NoteDatabase.instance.readAllNote();
-    return nd;
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,8 +24,9 @@ class _HomePageState extends State<HomePage> {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = NotesCubit.get(context);
+          var data = cubit.readTheData();
           int? index = cubit.legthNotes;
-          debugPrint('The length of data is: ${setData()}');
+          debugPrint('fffffff $index');
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
@@ -74,21 +68,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                   //show list of nodes here
                   // first check if there is any item in database
-                  index == null ? 
-                  Center(
-                    child: Text(
-                      'Add Notes',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                  ) : buildNotesList(
-                    itemsNumber: index, 
-                    title: cubit.readTheData()[index]['title'], 
-                    subtitle: cubit.readTheData()[index]['content'],
-                  ),
+                  index == 0
+                      ? Center(
+                          child: Text(
+                            'Add Notes',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey.shade500,
+                            ),
+                          ),
+                        )
+                      : buildNotesList(
+                          itemsNumber: index,
+                          title: data[index]['title'],
+                          subtitle: data[index]['createdTime'],
+                        ),
                 ],
               ),
             ),
@@ -126,5 +121,4 @@ class _HomePageState extends State<HomePage> {
       itemCount: itemsNumber,
     );
   }
-
 }

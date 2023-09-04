@@ -55,16 +55,24 @@ class NoteDatabase{
   }
   
   // read all the data in the database
-  Future<List<Note>> readAllNote() async {
+  Future<List<dynamic>> readAllNote() async {
     final db = await instance.database;
-    final result = await db.rawQuery('SELECT * FROM Notes');
-    debugPrint('The process is completed $result');
-    // if (result.isNotEmpty) {
-    //   var data = result.map((json) => Note.fromJson(json)).toList();
-    //   debugPrint('The process is completed $data');
-    //   return data;
-    // }
-    // debugPrint('There is an error');
+    List<Map<String, dynamic>> result = await db.rawQuery('SELECT * FROM Notes');
+    if (result.isNotEmpty) {
+      List<dynamic> note = [];
+      for (int i=0; i<result.length; i++) {
+        note.add({
+          'title': result[i]['title'], 
+          'content': result[i]['content'], 
+          'importance': result[i]['importance'],
+          'createdTime': result[i]['createdTime'], 
+          'lastUpdated': result[i]['lastUpdated']
+        });
+      }
+      debugPrint('The process is completed $note');
+      return note;
+    }
+    debugPrint('There is an error');
     return []; 
   }
   

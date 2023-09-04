@@ -14,12 +14,12 @@ class NotesCubit extends Cubit<NotesState> {
     return BlocProvider.of(context);
   }
   
-  int? legthNotes;
+  int legthNotes = 0;
   readTheData() async {
     var allNotes = await NoteDatabase.instance.readAllNote();
-    emit(NotesLoaded());
-    debugPrint('The Data is : $allNotes');
     legthNotes = allNotes.length;
+   // debugPrint('The length is: $legthNotes');
+    emit(NotesLoaded());
     return allNotes;
   }
   
